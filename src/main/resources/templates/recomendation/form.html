@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add/Edit Recommendation</title>
+  <link rel="stylesheet" th:href="@{/form.css}">
+</head>
+
+<body>
+  <div class="container">
+  <h2 th:text="${rec.rec_id == null ? 'Add Recommendation' : 'Edit Recommendation'}"></h2>
+
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+  <form th:action="${rec.rec_id == null} ? @{/recommendations} : @{/recommendations/update/{id}(id=${rec.rec_id})}"
+    th:object="${rec}" method="post">
+
+      <label>User:</label>
+      <select th:field="*{user.user_id}" required>
+        <option value="" disabled selected>Select a user</option>
+        <option th:each="u : ${users}" 
+                th:value="${u.user_id}" 
+                th:text="${u.name + ' (' + u.email + ')'}"></option>
+      </select>
+
+      <label>Recommendation:</label>
+      <textarea th:field="*{recomendation}" rows="5" placeholder="Enter your recommendation..." required></textarea>
+
+      <label>Created At:</label>
+      <input type="text" th:value="${rec.created_at != null ? #dates.format(rec.created_at, 'dd-MM-yyyy HH:mm') : '(Will be set on save)'}" readonly>
+
+      <div style="text-align:right; margin-top:20px;">
+      <button type="submit">Save Recommendation</button>
+      <a th:if="${rec.user != null}"
+        th:href="@{/recommendations/user/{id}(id=${rec.user.user_id})}"
+        class="button">Cancel</a>
+      <a th:unless="${rec.user != null}" th:href="@{/users}" class="button">Cancel</a>
+      </div>
+    </form>
+  </div>
+
+  <footer>© 2025 Mental Wellness Portal</footer>
+</body>
+</html>

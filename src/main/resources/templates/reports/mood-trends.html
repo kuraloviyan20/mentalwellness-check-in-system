@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Mood Trends</title>
+  <link rel="stylesheet" th:href="@{/form.css}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2 th:text="${user != null} ? ${user.name + ' - Mood Trends'} : 'Mood Trends'"></h2>
+
+    <div th:if="${labels.size() == 0}">
+      <p>No check-ins found for this user.</p>
+    </div>
+
+    <div th:if="${labels.size() > 0}">
+      <canvas id="moodChart" width="600" height="300"></canvas>
+    </div>
+
+    <div style="margin-top:16px; text-align:right;">
+      <a th:href="@{/checkin}" class="button">Back</a>
+    </div>
+  </div>
+
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    const labels = /*[[${labels}]]*/ [];
+    const values = /*[[${values}]]*/ [];
+
+    (function() {
+      if(!Array.isArray(labels) || labels.length === 0) return;
+      const ctx = document.getElementById('moodChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Average Mood',
+            data: values,
+            borderColor: '#667eea',
+            backgroundColor: 'rgba(102,126,234,0.2)',
+            tension: 0.3,
+            fill: true
+          }]
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true, suggestedMax: 10 }
+          }
+        }
+      });
+    })();
+    /*]]>*/
+  </script>
+</body>
+</html>

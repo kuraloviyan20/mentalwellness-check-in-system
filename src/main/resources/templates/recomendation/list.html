@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Recommendations</title>
+  <link rel="stylesheet" th:href="@{/list.css}">
+</head>
+
+<body>
+  <header>
+    <div class="header-content">
+      <h1 th:if="${currentUser != null}" th:text="${currentUser.name + '’s Recommendations'}">Recommendations</h1>
+      <h1 th:unless="${currentUser != null}">All Recommendations</h1>
+      <div class="header-actions">
+        <a th:href="@{/recommendations/new}" class="add-button">+ Add Recommendation</a>
+        <form th:if="${currentUser != null}" th:action="@{/recommendations/generate/{userId}(userId=${currentUser.user_id})}" method="post" style="display:inline;">
+          <button type="submit" class="button" title="Create recommendation from last 7 days trends">Generate from Trends</button>
+        </form>
+        <a th:href="@{/}" class="button">Home</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th th:unless="${currentUser != null}">User</th>
+          <th th:unless="${currentUser != null}">Email</th>
+          <th>Recommendation</th>
+          <th>Created At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr th:each="rec : ${recommendations}">
+          <td th:text="${rec.rec_id}"></td>
+          <td th:unless="${currentUser != null}" th:text="${rec.user != null ? rec.user.name : '—'}"></td>
+          <td th:unless="${currentUser != null}" th:text="${rec.user != null ? rec.user.email : '—'}"></td>
+          <td>
+            <div class="recommendation-text" th:text="${rec.recomendation}"></div>
+          </td>
+          <td th:text="${rec.created_at != null ? #dates.format(rec.created_at, 'dd MMM yyyy HH:mm') : '—'}"></td>
+          <td class="actions">
+            <a th:href="@{/recommendations/edit/{id}(id=${rec.rec_id})}" class="edit-btn">Edit</a>
+            <a th:href="@{/recommendations/delete/{id}(id=${rec.rec_id})}" 
+               class="delete-btn" 
+               onclick="return confirm('Are you sure you want to delete this recommendation?');">
+               Delete
+            </a>
+          </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(recommendations)}">
+          <td colspan="${currentUser != null ? 4 : 6}" class="no-data">
+            No recommendations available
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="navigation-links">
+      <a th:if="${currentUser != null}" th:href="@{/recommendations}" class="button">View All Recommendations</a>
+      <a th:href="@{/users}" class="button">Back to Users</a>
+    </div>
+  </div>
+
+  <footer>© 2025 Mental Wellness Portal</footer>
+</body>
+</html>

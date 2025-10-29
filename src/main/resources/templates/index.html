@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mental Wellness Application</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Mental Wellness</h1>
+        <div class="navigation">
+            <a th:href="@{/users}" class="button">User Management</a>
+            <a th:href="@{/checkin}" class="button">Check-In</a>
+            <a th:href="@{/recommendations}" class="button">Recommendations</a>
+            <a th:href="@{/reports}" class="button">Reports</a>
+        </div>
+    </div>
+</body>
+</html>

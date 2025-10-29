@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${user.user_id == null ? 'Add User' : 'Edit User'}"></title>
+  <link rel="stylesheet" th:href="@{/form.css}">
+</head>
+
+<body>
+  <div class="container">
+    <h2 th:text="${user.user_id == null ? 'Add New User' : 'Edit User'}"></h2>
+
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+    <form th:action="${user.user_id == null ? '/users' : '/users/update/' + user.user_id}" 
+          th:object="${user}" 
+          method="post"
+          class="user-form">
+      
+      <div class="form-group">
+        <label for="name">Full Name:</label>
+        <input type="text" 
+               id="name"
+               th:field="*{name}" 
+               th:errorclass="field-error"
+               placeholder="Enter full name">
+        <span class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address:</label>
+        <input type="email" 
+               id="email"
+               th:field="*{email}" 
+               th:errorclass="field-error"
+               placeholder="email@example.com">
+        <span class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="contact">Contact Number:</label>
+        <input type="tel" 
+               id="contact"
+               th:field="*{contact_no}" 
+               th:errorclass="field-error"
+               placeholder="Enter contact number">
+        <span class="error-message" th:if="${#fields.hasErrors('contact_no')}" th:errors="*{contact_no}"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="joinDate">Join Date:</label>
+        <input type="date" 
+               id="joinDate"
+               th:field="*{join_date}" 
+               th:errorclass="field-error">
+        <span class="error-message" th:if="${#fields.hasErrors('join_date')}" th:errors="*{join_date}"></span>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-button">Save User</button>
+        <a th:href="@{/users}" class="button cancel-button">Cancel</a>
+      </div>
+    </form>
+  </div>
+
+  <footer>© 2025 Mental Wellness System</footer>
+</body>
+</html>

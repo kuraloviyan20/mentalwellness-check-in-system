@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Reports</title>
+  <link rel="stylesheet" th:href="@{/list.css}">
+</head>
+<body>
+  <div class="container">
+    <h2>Reports</h2>
+    <p>Select a user to view trends.</p>
+
+    <div th:if="${#lists.isEmpty(users)}">
+      <p>No users found. Please add users first.</p>
+      <a th:href="@{/users}" class="button">Go to Users</a>
+    </div>
+
+    <div th:unless="${#lists.isEmpty(users)}">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="u : ${users}">
+            <td th:text="${u.user_id}"></td>
+            <td th:text="${u.name}"></td>
+            <td th:text="${u.email}"></td>
+            <td>
+              <div class="actions">
+                <a th:href="@{/api/reports/mood-trends/user/{id}(id=${u.user_id})}" class="button">Mood Trends</a>
+                <a th:href="@{/api/reports/stress-trends/user/{id}(id=${u.user_id})}" class="button">Stress Trends</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:16px; text-align:right;">
+      <a th:href="@{/}" class="button">Home</a>
+    </div>
+  </div>
+</body>
+</html>

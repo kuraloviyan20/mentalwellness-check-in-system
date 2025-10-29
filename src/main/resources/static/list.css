@@ -1,0 +1,176 @@
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f6f8fc;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1e2a47;
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Ensure header inner layout is tidy */
+.header-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  letter-spacing: 0.5px;
+}
+
+.add-button {
+  background: #007bff;
+  color: white;
+  text-decoration: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  transition: background 0.3s;
+  font-weight: 500;
+}
+
+.add-button:hover {
+  background: #0056b3;
+}
+
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.user-table thead {
+  background: #007bff;
+  color: white;
+}
+
+.user-table th, 
+.user-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Make action buttons lay out nicely and not overlap */
+.user-table td .actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+/* Also support when the TD itself has class 'actions' (recommendations page) */
+.user-table td.actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.user-table td.actions a {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+.user-table td .actions .button,
+.user-table td .actions a {
+  display: inline-block;
+}
+
+/* Improve long content handling */
+.user-table td,
+.user-table th {
+  word-break: break-word;
+}
+
+.no-data {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  padding: 20px 0;
+}
+
+/* Generic button style for links like Home / Back */
+.button {
+  background: #667eea;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.button:hover { background: #5a67d8; }
+
+/* Utility spacing for bottom navigation area */
+.navigation-links {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.edit-btn {
+  background: #28a745;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #218838;
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #c82333;
+}
+
+footer {
+  text-align: center;
+  padding: 1.2rem;
+  background: #1e2a47;
+  color: white;
+  font-size: 0.9rem;
+  margin-top: 40px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Daily Wellness Check-In</title>
+  <link rel="stylesheet" th:href="@{/form.css}">
+</head>
+
+<body>
+  <div class="container">
+    <h2 th:text="${checkIn.checkin_id == null ? 'Add Check-In' : 'Edit Check-In'}"></h2>
+
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+    <form th:action="@{/checkin}" th:object="${checkIn}" method="post">
+
+        <label>User:</label>
+        <select th:field="*{user.user_id}" required>
+          <option value="" disabled selected>Select a user</option>
+          <option th:each="u : ${users}"
+                  th:value="${u.user_id}"
+                  th:text="${u.name + ' (' + u.email + ')'}"></option>
+        </select>
+
+        <label>Mood Level (1-10):</label>
+        <select th:field="*{mood_level}" required>
+          <option value="" disabled selected>Select mood level</option>
+          <option th:each="i : ${#numbers.sequence(1,10)}"
+                  th:value="${i}"
+                  th:text="${i}"></option>
+        </select>
+
+        <label>Stress Level (1-10):</label>
+        <select th:field="*{stress_level}" required>
+          <option value="" disabled selected>Select stress level</option>
+          <option th:each="i : ${#numbers.sequence(1,10)}"
+                  th:value="${i}"
+                  th:text="${i}"></option>
+        </select>
+
+        <label>Sleep Hours:</label>
+        <input type="number" th:field="*{sleep_hours}" step="0.1" min="0" placeholder="e.g. 7.5" required>
+
+        <label>Notes:</label>
+        <textarea th:field="*{notes}" rows="4" placeholder="Optional notes about your day..."></textarea>
+
+        <label>Check-In Date:</label>
+        <div th:if="${checkIn.checkin_date != null}">
+          <input type="text" th:value="${#temporals.format(checkIn.checkin_date, 'dd-MM-yyyy HH:mm')}" readonly>
+        </div>
+        <div th:unless="${checkIn.checkin_date != null}">
+          <input type="text" value="(Will be auto-filled)" readonly>
+        </div>
+
+          <div class="form-actions" style="text-align:right; margin-top:20px;">
+            <button type="submit">Save Check-In</button>
+            <a th:if="${checkIn.user != null}" th:href="@{/checkin/user/{id}(id=${checkIn.user.user_id})}" class="button">Cancel</a>
+            <a th:unless="${checkIn.user != null}" th:href="@{/checkin}" class="button">Cancel</a>
+          </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>© 2025 Mental Wellness Portal</footer>
+</body>
+</html>
